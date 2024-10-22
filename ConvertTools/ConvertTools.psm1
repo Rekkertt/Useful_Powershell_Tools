@@ -18,8 +18,8 @@ PS C:\> ConvertFrom-Base64 -Encoding "UTF8" -InputString "SGVsbG8gd29ybGQ="
 This command converts the Base64 encoded string "SGVsbG8gd29ybGQ=" to its original UTF8 string "Hello world".
 
 .NOTES
-Author: Your Name
-Date: YYYY-MM-DD
+Author: Rekkertt
+Date: 23-10-2024
 #>
 
     [CmdletBinding()]
@@ -64,6 +64,32 @@ Date: 23-10-2024
 
 Function ConvertStringTo-CSV {
 
+<#
+.SYNOPSIS
+Converts a multi-line string to a CSV formatted string.
+
+.DESCRIPTION
+The ConvertStringTo-CSV function takes a header and a multi-line string, and converts the string into a CSV format with the provided header.
+
+.PARAMETER Header
+The header row for the CSV output.
+
+.PARAMETER MultiLineString
+The multi-line string to be converted into CSV format.
+
+.EXAMPLE
+PS C:\> $header = "UserPrincipalName"
+PS C:\> $data = "John.doe@contoso.com
+Jane.doe@contoso.com
+"
+PS C:\> ConvertStringTo-CSV -Header $header -MultiLineString $data
+This command converts the multi-line string data into a CSV formatted string with the specified header.
+
+.NOTES
+Author: Rekkertt
+Date: 23-10-2024
+
+#>    
     [CmdletBinding()]
     param
     (
