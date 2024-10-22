@@ -114,6 +114,7 @@ Date: 23-10-2024
     }
 }
 
+
 Function Remove-MgUserLicense {
 
 <#
@@ -186,6 +187,7 @@ Date: 23-10-2024
         }
     }
 }
+
 
 Function Convertto-FriendlyLicenseV2 {
 
