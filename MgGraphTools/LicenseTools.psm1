@@ -1,5 +1,32 @@
 Function Get-MgUserLicenseAssignmentPath {
 
+<#
+.SYNOPSIS
+Retrieves user license assignment paths in Microsoft Graph.
+
+.DESCRIPTION
+The Get-MgUserLicenseAssignmentPath function fetches user license assignments from Microsoft Graph, with options to filter by assignment path (Directly, DirectlyAndGroup, FromGroup) 
+It can check for all licenses or specific a license.
+
+.PARAMETER AssignmentPath
+Specifies the assignment path to filter the results. Valid values are "Directly", "DirectlyAndGroup", and "FromGroup".
+
+.PARAMETER CheckAllLicenses
+If specified, the function will check all licenses.
+
+.EXAMPLE
+PS C:\> Get-MgUserLicenseAssignmentPath -AssignmentPath "Directly"
+This command retrieves users with licenses assigned directly.
+
+.EXAMPLE
+PS C:\> Get-MgUserLicenseAssignmentPath -CheckAllLicenses
+This command retrieves all users with any licenses assigned.
+
+.NOTES
+Author: Rekkertt
+Date: 23-10-2024
+#>
+
     [CmdletBinding()]
     param 
     (
@@ -89,6 +116,35 @@ Function Get-MgUserLicenseAssignmentPath {
 
 Function Remove-MgUserLicense {
 
+<#
+.SYNOPSIS
+Removes specified licenses from users in Microsoft Graph.
+
+.DESCRIPTION
+The Remove-MgUserLicense function removes licenses from users based on the specified assignment path. It can also handle throttling by introducing a sleep period to avoid rate limiting.
+
+.PARAMETER AssignmentPath
+Specifies the assignment path to filter the users. Valid values are "Directly" and "DirectlyAndGroup".
+
+.PARAMETER CheckAllLicenses
+If specified, the function will check all licenses.
+
+.PARAMETER ThrottlingTimeout
+Specifies the sleep period in seconds to avoid rate limiting.
+
+.EXAMPLE
+PS C:\> Remove-MgUserLicense -AssignmentPath "Directly" -ThrottlingTimeout 2
+This command removes licenses assigned directly to users with a 2-second sleep period to avoid rate limiting.
+
+.EXAMPLE
+PS C:\> Remove-MgUserLicense -AssignmentPath "DirectlyAndGroup" -CheckAllLicenses -ThrottlingTimeout 1
+This command removes the directly assigned license of users who have the assignment from both for all licenses with a 1-second sleep period to avoid rate limiting.
+
+.NOTES
+Author: Rekkert
+Date: 23-10-2024
+#>
+
     [CmdletBinding(SupportsShouldProcess)]
     param
     (
@@ -132,7 +188,30 @@ Function Remove-MgUserLicense {
 }
 
 Function Convertto-FriendlyLicenseV2 {
-    
+
+<#
+.SYNOPSIS
+HelperFunction to translate a SKU to a friendlyName.
+
+.DESCRIPTION
+This Helperfunction can translate a SKU's to a friendlyName.
+
+
+.PARAMETER SKU
+Needed to find the friendly name
+
+.PARAMETER ThrottlingTimeout
+Specifies the sleep period in seconds to avoid rate limiting.
+
+.EXAMPLE
+PS C:\> Convertto-FriendlyLicensev2 -Sku <Sku>
+This command translates the SKU to a FriendlyName
+
+.NOTES
+Author: Rekkert
+Date: 23-10-2024
+#>
+
     param 
     (    
         [Parameter()]
