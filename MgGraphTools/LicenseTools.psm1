@@ -72,7 +72,7 @@ Date: 23-10-2024
         $Report = $users | Select-Object Id,DisplayName,UserPrincipalName,CreatedDateTime,OnPremisesSyncEnabled,AccountEnabled,  
         @{Name = "AccountSkuId"         ; Expression = {$sku}}, 
         @{Name = "SkuPartNumber"        ; Expression = {($AccountSkuId | Where-object {$_.skuid -eq $sku}).SkuPartnumber } },  
-        @{Name = "FriendlySku"          ; Expression = {  (Convertto-FriendlyLicensev2 -Sku $($AccountSkuId | Where-object {$_.skuid -eq $sku}).SkuPartnumber).friendlyname  } },  
+        @{Name = "FriendlySku"          ; Expression = { (Convertto-FriendlyLicensev2 -Sku $($AccountSkuId | Where-object {$_.skuid -eq $sku}).SkuPartnumber).friendlyname} },  
         @{Name = "LastUpdatedDateTime"  ; Expression = {($_.licenseAssignmentStates | Where-Object {$_.skuid -eq $sku}).LastUpdatedDateTime}}, 
         @{Name = "Assigned"             ; Expression = { 
     
@@ -91,7 +91,8 @@ Date: 23-10-2024
                     "FromGroup"
                 } 
     
-                else {
+                else 
+                {
                     "Directly"
                 }
 
@@ -99,9 +100,9 @@ Date: 23-10-2024
 
         }
 
-        $Directly         = $Report | Where-Object { $_.Assigned -eq 'Directly'             }
+        $Directly         = $Report | Where-Object { $_.Assigned -eq 'Directly'         }
         $DirectlyAndGroup = $Report | Where-Object { $_.Assigned -eq 'DirectlyAndGroup' }
-        $FromGroup        = $Report | Where-Object { $_.Assigned -eq 'FromGroup'            }
+        $FromGroup        = $Report | Where-Object { $_.Assigned -eq 'FromGroup'        }
 
         switch ($AssignmentPath) 
         {
@@ -169,7 +170,6 @@ Date: 23-10-2024
                 Start-Sleep $ThrottlingTimeout # purpose sleep to avoid rate limiting.
                 Write-Output "Removing $($User.Friendlysku) from user:'$($user.displayname)'"
                 [void](Set-MgUserLicense -UserId $user.UserPrincipalName -RemoveLicenses @($User.AccountSkuId) -AddLicenses @())
- 
             }
         }
     } 
